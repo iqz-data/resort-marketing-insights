@@ -1,0 +1,50 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "bv_Leads"
+    FOLDER = '/1 - dataconnection/2 - base views'
+    DATASOURCENAME=ds_sql_marketingisnights
+    CATALOGNAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_leads.CATALOGNAME}' 
+    SCHEMANAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_leads.SCHEMANAME}' 
+    RELATIONNAME='Leads' 
+    OUTPUTSCHEMA (
+        lead_id = 'lead_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        campaign_id = 'campaign_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        source = 'source' :'java.lang.String' (OPT) (sourcetypesize='100', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        date_generated = 'date_generated' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  SORTABLE,
+        status = 'status' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        customer_id = 'customer_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE
+    )
+    CONSTRAINT 'PK__Leads__B54D340B247F6ACE' PRIMARY KEY ( 'lead_id' )
+    CONSTRAINT 'FK__Leads__campaign___07C12930' FOREIGN KEY ( 'campaign_id' ) 
+    REFERENCES 'resort_marketing_insights'.'dbo'.'Campaigns'( 'campaign_id' )  ON UPDATE NO ACTION  ON DELETE NO ACTION NOT DEFERRABLE 
+    CONSTRAINT 'FK__Leads__customer___06CD04F7' FOREIGN KEY ( 'customer_id' ) 
+    REFERENCES 'resort_marketing_insights'.'dbo'.'Customers'( 'customer_id' )  ON UPDATE NO ACTION  ON DELETE NO ACTION NOT DEFERRABLE 
+    INDEX 'PK__Leads__B54D340B247F6ACE' CLUSTER UNIQUE PRIMARY ( 'lead_id' );
+
+CREATE OR REPLACE TABLE bv_leads I18N us_est (
+        lead_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        campaign_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        source:text (sourcetypeid = '12', sourcetypesize = '100'),
+        date_generated:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10'),
+        status:text (sourcetypeid = '12', sourcetypesize = '50'),
+        customer_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10')
+    )
+    FOLDER = '/1 - dataconnection/2 - base views'
+    CONSTRAINT 'PK__Leads__B54D340B247F6ACE' PRIMARY KEY ( 'lead_id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "bv_Leads"(
+        I18N us_est
+        CONSTRAINTS (
+             ADD lead_id (any) OPT ANY
+             ADD campaign_id (any) OPT ANY
+             ADD source (any) OPT ANY
+             ADD date_generated (any) OPT ANY
+             ADD status (any) OPT ANY
+             ADD customer_id (any) OPT ANY
+        )
+        OUTPUTLIST (campaign_id, customer_id, date_generated, lead_id, source, status
+        )
+        WRAPPER (jdbc "bv_Leads")
+    );
+

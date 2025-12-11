@@ -1,0 +1,26 @@
+﻿CREATE OR REPLACE REST WEBSERVICE ws_iv_active_campaigns
+    CONNECTION (
+        CHUNKSIZE = 1000
+        CHUNKTIMEOUT = 1000
+        QUERYTIMEOUT = 900000
+        POOLENABLED = true
+        POOLINITSIZE = 0
+        POOLMAXACTIVE = 30
+    )
+    DEFAULTREPRESENTATION = HTML
+    SUPPORTEDREPRESENTATIONS (HTML, XML, JSON)
+    RESOURCES (
+        VIEW iv_active_campaigns FIELDS (
+            campaign_id : 'int', 
+            campaign_name : 'text', 
+            start_date : 'localdate', 
+            end_date : 'localdate', 
+            budget : 'decimal'
+        )
+    )
+    OPTIONS ( NULLVALUESASEMPTYXMLELEMENTS = false
+        ALLOW_CORS_ORIGINS (*) DISABLED
+        PROCESS_FUNCTIONS_IN_SELECT_PARAMETER = true ) 
+    OPENAPI2 ( API_VERSION = '1.0.0' ) 
+    FOLDER = '/4 - data services';
+

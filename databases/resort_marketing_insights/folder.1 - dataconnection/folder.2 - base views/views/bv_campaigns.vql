@@ -1,0 +1,46 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "bv_Campaigns"
+    FOLDER = '/1 - dataconnection/2 - base views'
+    DATASOURCENAME=ds_sql_marketingisnights
+    CATALOGNAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_campaigns.CATALOGNAME}' 
+    SCHEMANAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_campaigns.SCHEMANAME}' 
+    RELATIONNAME='Campaigns' 
+    OUTPUTSCHEMA (
+        campaign_id = 'campaign_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        campaign_name = 'campaign_name' :'java.lang.String' (OPT) (sourcetypesize='100', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        start_date = 'start_date' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  SORTABLE,
+        end_date = 'end_date' :'java.time.LocalDate' (OPT) (sourcetypedecimals='0', sourcetypesize='10', sourcetypeid='91', sourcetypename='date')  SORTABLE,
+        budget = 'budget' :'java.math.BigDecimal' (OPT) (sourcetypedecimals='2', sourcetyperadix='10', sourcetypesize='18', sourcetypeid='3', sourcetypename='decimal')  SORTABLE,
+        status = 'status' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    )
+    CONSTRAINT 'PK__Campaign__905B681C6845D663' PRIMARY KEY ( 'campaign_id' )
+    INDEX 'PK__Campaign__905B681C6845D663' CLUSTER UNIQUE PRIMARY ( 'campaign_id' );
+
+CREATE OR REPLACE TABLE bv_campaigns I18N us_est (
+        campaign_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Represents a unique identifier for each campaign, ensuring distinction and tracking across records.'),
+        campaign_name:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Stores the name or title of the campaign, helping to identify and classify it within marketing or organizational contexts.'),
+        start_date:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Indicates the date on which the campaign is set to begin, marking the commencement of its activities.'),
+        end_date:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Specifies the date when the campaign is scheduled to conclude, signaling the end of its operations.'),
+        budget:decimal (sourcetypeid = '3', sourcetyperadix = '10', sourcetypedecimals = '2', sourcetypesize = '18', description = 'Represents the allocated monetary resources for the campaign, reflecting its financial planning and capacity.'),
+        status:text (sourcetypeid = '12', sourcetypesize = '50', description = 'Denotes the current standing or progress of the campaign, such as whether it is active, completed, or paused.')
+    )
+    FOLDER = '/1 - dataconnection/2 - base views'
+    CONSTRAINT 'PK__Campaign__905B681C6845D663' PRIMARY KEY ( 'campaign_id' )
+    CACHE OFF
+    BATCHSIZEINCACHE DEFAULT
+    TIMETOLIVEINCACHE NOEXPIRE
+    ADD SEARCHMETHOD "bv_Campaigns"(
+        I18N us_est
+        CONSTRAINTS (
+             ADD campaign_id (any) OPT ANY
+             ADD campaign_name (any) OPT ANY
+             ADD start_date (any) OPT ANY
+             ADD end_date (any) OPT ANY
+             ADD budget (any) OPT ANY
+             ADD status (any) OPT ANY
+        )
+        OUTPUTLIST (budget, campaign_id, campaign_name, end_date, start_date, status
+        )
+        WRAPPER (jdbc "bv_Campaigns")
+    );
+

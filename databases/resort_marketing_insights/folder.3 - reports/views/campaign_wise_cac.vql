@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW campaign_wise_cac FOLDER = '/3 - reports' AS SELECT bv_campaigns.campaign_id AS campaign_id, bv_campaigns.campaign_name AS campaign_name, bv_campaigns.start_date AS start_date, bv_campaigns.end_date AS end_date, bv_campaigns.budget AS campaign_cost, iv_campaigns_acquired_customers.acquired_customer_count AS acquired_customer_count, (bv_campaigns.budget/cast('double', iv_campaigns_acquired_customers.acquired_customer_count)) AS customer_acquisition_cost_per_campaign FROM bv_campaigns AS bv_campaigns INNER JOIN iv_campaigns_acquired_customers AS iv_campaigns_acquired_customers ON bv_campaigns.campaign_id = iv_campaigns_acquired_customers.campaign_id  WHERE bv_campaigns.status <> 'Cancelled';
+
+ALTER VIEW campaign_wise_cac
+ LAYOUT (bv_campaigns = [20, 45, 200, 200], iv_campaigns_acquired_customers = [554, 29, 200, 200]);
+

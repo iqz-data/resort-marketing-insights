@@ -1,0 +1,3 @@
+ALTER USER marketing_insights_developer
+GRANT ADMIN ON resort_marketing_insights;
+

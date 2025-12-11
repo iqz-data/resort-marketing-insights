@@ -1,0 +1,13 @@
+﻿CREATE OR REPLACE DATABASE resort_marketing_insights 'Marketing Insights database serves Campaigns and Leads data that were conducted for Resort360 marketing.';
+
+ALTER DATABASE resort_marketing_insights
+  CHARSET DEFAULT;
+
+ALTER DATABASE resort_marketing_insights
+  CACHE ON (
+    MAINTENANCE OFF
+    MAINTAINERPERIOD 21600
+    TIMETOLIVE 86400
+    DATASOURCE CUSTOM
+  );
+

@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW iv_active_campaigns FOLDER = '/2 - integration' AS SELECT bv_campaigns.campaign_id AS campaign_id, bv_campaigns.campaign_name AS campaign_name, bv_campaigns.start_date AS start_date, bv_campaigns.end_date AS end_date, bv_campaigns.budget AS budget FROM bv_campaigns WHERE status = 'Active';
+
+ALTER VIEW iv_active_campaigns
+ LAYOUT (bv_campaigns = [20, 20, 200, 200]);
+

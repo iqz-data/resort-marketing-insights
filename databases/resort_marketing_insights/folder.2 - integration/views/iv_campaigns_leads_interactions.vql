@@ -1,0 +1,5 @@
+﻿CREATE OR REPLACE VIEW iv_campaigns_leads_interactions FOLDER = '/2 - integration' AS SELECT "bv_Campaigns".campaign_id AS campaign_id, "bv_Campaigns".campaign_name AS campaign_name, "bv_Campaigns".start_date AS start_date, "bv_Campaigns".end_date AS end_date, "bv_Campaigns".budget AS budget, "bv_Leads".source AS lead_source, "bv_Leads".status AS lead_status, "bv_Interactions".interaction_type AS interaction_type, "bv_Interactions".interaction_date AS interaction_date FROM (bv_campaigns AS "bv_Campaigns" INNER JOIN bv_leads AS "bv_Leads" ON "bv_Campaigns".campaign_id = "bv_Leads".campaign_id ) INNER JOIN bv_interactions AS "bv_Interactions" ON "bv_Leads".lead_id = "bv_Interactions".lead_id  WHERE "bv_Campaigns".status = 'Active';
+
+ALTER VIEW iv_campaigns_leads_interactions
+ LAYOUT (bv_campaigns = [187, 125, 200, 200], bv_leads = [528, 150, 200, 200], bv_interactions = [901, 140, 200, 200]);
+

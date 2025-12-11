@@ -1,0 +1,44 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE WRAPPER JDBC "bv_Interactions"
+    FOLDER = '/1 - dataconnection/2 - base views'
+    DATASOURCENAME=ds_sql_marketingisnights
+    CATALOGNAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_interactions.CATALOGNAME}' 
+    SCHEMANAME='${databases.resort_marketing_insights.folder.1 - dataconnection.folder.2 - base views.views.jdbc.bv_interactions.SCHEMANAME}' 
+    RELATIONNAME='Interactions' 
+    OUTPUTSCHEMA (
+        interaction_id = 'interaction_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  NOT NULL SORTABLE,
+        lead_id = 'lead_id' :'java.lang.Integer' (OPT) (sourcetypedecimals='0', sourcetyperadix='10', sourcetypesize='10', sourcetypeid='4', sourcetypename='int')  SORTABLE,
+        interaction_type = 'interaction_type' :'java.lang.String' (OPT) (sourcetypesize='50', sourcetypeid='12', sourcetypename='varchar')  SORTABLE,
+        interaction_date = 'interaction_date' :'java.time.LocalDateTime' (OPT) (sourcetypedecimals='3', sourcetypesize='23', sourcetypeid='93', sourcetypename='datetime')  SORTABLE,
+        notes = 'notes' :'java.lang.String' (OPT) (sourcetypesize='2147483647', sourcetypeid='12', sourcetypename='varchar')  SORTABLE
+    )
+    CONSTRAINT 'PK__Interact__605F8FE6E4DAE0C3' PRIMARY KEY ( 'interaction_id' )
+    CONSTRAINT 'FK__Interacti__lead___03F0984C' FOREIGN KEY ( 'lead_id' ) 
+    REFERENCES 'resort_marketing_insights'.'dbo'.'Leads'( 'lead_id' )  ON UPDATE NO ACTION  ON DELETE NO ACTION NOT DEFERRABLE 
+    INDEX 'PK__Interact__605F8FE6E4DAE0C3' CLUSTER UNIQUE PRIMARY ( 'interaction_id' );
+
+CREATE OR REPLACE TABLE bv_interactions I18N us_est (
+        interaction_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        lead_id:int (sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10'),
+        interaction_type:text (sourcetypeid = '12', sourcetypesize = '50'),
+        interaction_date:timestamp (sourcetypeid = '93', sourcetypedecimals = '3', sourcetypesize = '23'),
+        notes:text (sourcetypeid = '12', sourcetypesize = '2147483647')
+    )
+    FOLDER = '/1 - dataconnection/2 - base views'
+    CONSTRAINT 'PK__Interact__605F8FE6E4DAE0C3' PRIMARY KEY ( 'interaction_id' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD "bv_Interactions"(
+        I18N us_est
+        CONSTRAINTS (
+             ADD interaction_id (any) OPT ANY
+             ADD lead_id (any) OPT ANY
+             ADD interaction_type (any) OPT ANY
+             ADD interaction_date (any) OPT ANY
+             ADD notes (any) OPT ANY
+        )
+        OUTPUTLIST (interaction_date, interaction_id, interaction_type, lead_id, notes
+        )
+        WRAPPER (jdbc "bv_Interactions")
+    );
+
