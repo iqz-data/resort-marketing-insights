@@ -22,17 +22,17 @@ CREATE OR REPLACE WRAPPER JDBC "bv_Customers"
     INDEX 'PK__Customer__CD65CB85A2FA7526' CLUSTER UNIQUE PRIMARY ( 'customer_id' );
 
 CREATE OR REPLACE TABLE bv_customers I18N us_est (
-        customer_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Represents a unique identifier for each customer.'),
-        first_name:text (sourcetypeid = '12', sourcetypesize = '50', description = 'Stores the first name of the customer.'),
-        last_name:text (sourcetypeid = '12', sourcetypesize = '50', description = 'Contains the last name of the customer.'),
-        email:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Records the email address of the customer.'),
-        phone:text (sourcetypeid = '12', sourcetypesize = '20', description = 'Represents the phone number of the customer.'),
-        address:text (sourcetypeid = '12', sourcetypesize = '255', description = 'Captures the street address of the customer.'),
-        city:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Indicates the city where the customer resides.'),
-        state:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Specifies the state of residence for the customer.'),
-        country:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Denotes the country associated with the customer''s address.'),
-        postal_code:text (sourcetypeid = '12', sourcetypesize = '20', description = 'Holds the postal or ZIP code of the customer''s location.'),
-        date_created:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Represents the date when the customer record was created.')
+        customer_id:int (notnull, sourcetypeid = '4', sourcetyperadix = '10', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Represents a unique identifier for each customer for ensuring their distinct recognition.'),
+        first_name:text (sourcetypeid = '12', sourcetypesize = '50', description = 'Stores the first name of the customer, helping personalize customer interactions.'),
+        last_name:text (sourcetypeid = '12', sourcetypesize = '50', description = 'Contains the last name of the customer, contributing to full name identification.'),
+        email:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Records the email address of the customer for communication and contact purposes.'),
+        phone:text (sourcetypeid = '12', sourcetypesize = '20', description = 'Represents the phone number of the customer for direct communication.'),
+        address:text (sourcetypeid = '12', sourcetypesize = '255', description = 'Captures the street address of the customer to provide location details.'),
+        city:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Indicates the city where the customer resides, offering regional context.'),
+        state:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Specifies the state of residence for the customer for broader geographical classification.'),
+        country:text (sourcetypeid = '12', sourcetypesize = '100', description = 'Denotes the country associated with the customer’s address for international identification.'),
+        postal_code:text (sourcetypeid = '12', sourcetypesize = '20', description = 'Holds the postal or ZIP code of the customer’s location for precise address mapping.'),
+        date_created:localdate (sourcetypeid = '91', sourcetypedecimals = '0', sourcetypesize = '10', description = 'Represents the date when the customer record was created to track record initiation.')
     )
     FOLDER = '/1 - dataconnection/2 - base views'
     CONSTRAINT 'PK__Customer__CD65CB85A2FA7526' PRIMARY KEY ( 'customer_id' )
